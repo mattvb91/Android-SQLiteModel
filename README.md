@@ -4,6 +4,23 @@ Basic SQLite ORM library for Android
 [![Download](https://api.bintray.com/packages/mattvb91/libraries/SQLiteModel/images/download.svg) ](https://bintray.com/mattvb91/libraries/SQLiteModel/_latestVersion)
 [![Build Status](https://travis-ci.org/mattvb91/Android-SQLiteModel.svg?branch=master)](https://travis-ci.org/mattvb91/Android-SQLiteModel)
 
+### Install
+
+Gradle
+```
+compile 'ie.mavon.sqlitemodel:sqlitemodel:1.0.0'
+```
+
+Maven
+```
+<dependency>
+  <groupId>ie.mavon.sqlitemodel</groupId>
+  <artifactId>sqlitemodel</artifactId>
+  <version>1.0.0</version>
+  <type>pom</type>
+</dependency>
+```
+
 ### Basic Usage
 
 SQLiteModel allows you to make saving/retrieving objects to sqlite very easy:
