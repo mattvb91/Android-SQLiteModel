@@ -94,7 +94,7 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * Get a model by its ID
      *
-     * @param id
+     * @param id String
      * @return Model|Null
      */
     public SQLiteModel getOneById(int id) {
@@ -130,7 +130,7 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * Get models matching passed in filter.
      *
-     * @param filter
+     * @param filter HashMap
      * @return List
      * <p>
      * TODO refactor/improve WHERE filtering to get rid of heavy hashmap usage
@@ -179,7 +179,7 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * Build up the WHERE string with its various filters
      *
-     * @param filter
+     * @param filter HashMap
      * @return String
      */
     public String buildWhere(HashMap<String, Object> filter) {
@@ -230,7 +230,7 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * This will use the defined dbColumns to load the model.
      *
-     * @param cursor
+     * @param cursor Cursor
      * @return Model
      */
     private SQLiteModel populateFromCursor(Cursor cursor) {
@@ -296,8 +296,8 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * Allow custom populating from cursor in child classes
      *
-     * @param field
-     * @param cursor
+     * @param field Field
+     * @param cursor Cursor
      */
     protected void populateCustomFromCursor(Field field, Cursor cursor) throws NoSuchMethodException {
         throw new NoSuchMethodException();
@@ -306,7 +306,7 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * Use the dbColumns to insert the contentValues
      *
-     * @param contentValues
+     * @param contentValues ContentValues
      */
     protected void populateContentValues(ContentValues contentValues) {
 
@@ -401,8 +401,8 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * Count with filter
      *
-     * @param filter
-     * @return
+     * @param filter HashMap
+     * @return int
      */
     public int count(HashMap<String, Object> filter) {
         String query = "SELECT count(" + _ID + ") FROM " + getTableName();
@@ -435,9 +435,9 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * If this is an optional select box we include an empty option at the top
      *
-     * @param fieldName
-     * @param optional
-     * @return
+     * @param fieldName String
+     * @param optional boolean
+     * @return LinkedHashMap
      */
     public LinkedHashMap<String, String> getItemsForSelect(String fieldName, boolean optional) {
         if (this.itemsForSelect == null) {
@@ -455,7 +455,7 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
      * Get items for a select spinner.
      *
      * @param fieldName to select
-     * @return LinkedHashMap<String, String>
+     * @return LinkedHashMap
      */
     public LinkedHashMap<String, String> getItemsForSelect(String fieldName) {
 
@@ -510,7 +510,7 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * Add the db columns common to all models
      *
-     * @param dbColumns
+     * @param dbColumns Map
      */
     public static void setDBColumns(Map<String, Integer> dbColumns) {
         dbColumns.put(_ID, TYPE_INTEGER);
@@ -519,8 +519,8 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
     /**
      * Quick way of generating the getter for associated instance variable name
      *
-     * @param name
-     * @return
+     * @param name String
+     * @return String
      */
     private static String fieldToGetter(String name) {
         String[] parts = name.split("_");

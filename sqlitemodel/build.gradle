@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion "26.0.3"
 
     defaultConfig {
         minSdkVersion 19
@@ -21,6 +21,28 @@ android {
     }
 }
 
+
+ext {
+    // Where you will see your artifact in Bintray's web interface
+    // The "bintrayName" should match the name of the Bintray repro.
+    bintrayRepo = 'libraries'
+    bintrayName = 'SQLiteModel'
+
+    // Maven metadata
+    publishedGroupId = 'ie.mavon.sqlitemodel'
+    libraryName = 'sqlitemodel'
+    // Save yourself a head ache, and set this equal to the name of the Android Studio library
+    // module. The artifact name needs to match the name of the library.
+    artifact = 'sqlitemodel'
+
+    libraryDescription = 'SQLiteModel for Android'
+    libraryVersion = '1.0.0'
+
+    developerId = 'mattvb91'
+    developerName = 'Matthias von Bargen'
+    developerEmail = 'matt@mavon.ie'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -34,5 +56,52 @@ dependencies {
 tasks.withType(Test) {
     testLogging {
         events "passed", "skipped", "failed"
+    }
+}
+
+apply from: 'https://raw.githubusercontent.com/attwellBrian/JCenter/master/installv1.gradle'
+
+apply plugin: 'com.jfrog.bintray'
+
+version = libraryVersion
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+bintray {
+    user = ""
+    key = ""
+
+    configurations = ['archives']
+    pkg {
+        repo = "libraries"
+        name = bintrayName
+        desc = libraryDescription
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+            // Optional. The passphrase for GPG signing'
+            // gpg {
+            //    sign = true //Determines whether to GPG sign the files. The default is false
+            //    passphrase = properties.getProperty("bintray.gpg.password")
+            //}
+        }
     }
 }
