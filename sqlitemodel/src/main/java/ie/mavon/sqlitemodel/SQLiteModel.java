@@ -381,6 +381,7 @@ abstract public class SQLiteModel implements BaseColumns, Serializable {
      */
     public boolean delete() {
         long dbDelete = _db.getWritableDatabase().delete(getTableName(), _ID + " = " + this.getId(), null);
+
         return dbDelete == 1;
     }
 
