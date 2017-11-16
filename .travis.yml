@@ -37,3 +37,6 @@ android:
   
 script:
   - ./gradlew test --stacktrace
+
+after_success:
+- ./gradlew cobertura coveralls
